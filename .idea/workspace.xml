@@ -8,7 +8,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Ai" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1X1robZWKQRnZocKsuN1kOCKGm0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -40,6 +40,7 @@
       <workItem from="1580226653640" duration="174000" />
       <workItem from="1580226844239" duration="263000" />
       <workItem from="1580228105418" duration="2387000" />
+      <workItem from="1580404983094" duration="125000" />
     </task>
     <servers />
   </component>
@@ -55,9 +56,10 @@
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
     <state x="633" y="188" key="SettingsEditor/0.0.2194.1194@0.0.2194.1194" timestamp="1580226975241" />
-    <state x="793" y="422" key="com.intellij.ide.util.TipDialog" timestamp="1580228106001">
-      <screen x="0" y="0" width="2194" height="1194" />
+    <state x="925" y="495" key="com.intellij.ide.util.TipDialog" timestamp="1580404984023">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="793" y="422" key="com.intellij.ide.util.TipDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1580228106001" />
+    <state x="925" y="495" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1920.0.1280.680@0.0.2560.1400" timestamp="1580404984023" />
   </component>
 </project>
