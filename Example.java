@@ -13,98 +13,6 @@ class Example {
 		String login = "ew340";
 
 
-		//System.out.println("These are the instructions of how to use the problem library.  Please make sure you follow the instructions carefully.");
-
-
-		//System.out.println("For the first problem, you need to use Assess.getTest1(double, double).");
-
-		//An example solution consists of an array  of doubles of size 50
-		//Allowed values are between -5 and +5 (this is not actually checked, but no point in going beyond these values)
-		//Lower fitness is better. The optimal fitness is 0 (i.e. no negative fitness values).
-
-		//generate a sample solution like so:
-
-
-		//get the fitness for a candidate solution in problem 1 like so
-		//	 fit = Assess.getTest1(sol1);
-//
-//			for(int j = 0; j < solSize; j++){
-//				System.out.print(sol1[j] + " ");
-//			}
-//			System.out.println("The fitness of your example Solution is: "+ fit);
-
-
-//			for (int j = 0; j < solSize; j++) {
-//				if(sol1[j] < 1) {
-//					sol1[j] = -1;
-//				}
-//			}
-
-
-//			fit = Assess.getTest1(sol1);
-
-//			for(int j = 0; j < solSize; j++){
-//				System.out.print(sol1[j] + " ");
-//			}
-//			System.out.println("The fitness of your example Solution is: "+ fit);
-
-
-//			for (int j = 0; j < solSize; j++) {
-//				sol1[j] = sol1[j] / 2;
-//				}
-//			for(int j = 0; j < solSize; j++){
-//				System.out.print(sol1[j] + " ");
-//			}
-//			fit = Assess.getTest1(sol1);
-
-//			System.out.println("The fitness of your example Solution is: "+ fit);
-//
-//			for (int j = 0; j < solSize; j++) {
-//				sol1[j] = sol1[j] - 0.02;
-//			}
-
-//			for(int j = 0; j < solSize; j++){
-//				System.out.print(sol1[j] + " ");
-//			}
-//			fit = Assess.getTest1(sol1);
-
-//			System.out.println("The fitness of your example Solution is: "+ fit);
-
-//			for (int j = 0; j < solSize; j++) {
-//				sol1[j] = sol1[j] - 0.010101;
-//			}
-
-//			for(int j = 0; j < solSize; j++){
-//				System.out.print(sol1[j] + " ");
-//			}
-//			fit = Assess.getTest1(sol1);
-
-//			System.out.println("The fitness of your example Solution is: "+ fit);
-//			System.out.println(" ");
-//			System.out.println(" ");
-//			System.out.println("Now let us turn to the second problem:");
-//			System.out.println("A sample solution in this case is a boolean array of size 100.");
-//			System.out.println("I now create a random sample solution and get the weight and utility:");
-
-
-		//Creating a sample solution for the second problem
-		//The higher the fitness, the better, but be careful of  the weight constraint!
-		//	boolean[] sol2 = new boolean[100];
-		//	for(int i=0;i< sol2.length; i++){
-		//		sol2[i]= (Math.random()>0.5);
-		//	}
-
-		//Now checking the fitness of the candidate solution
-		//	double[] tmp =(Assess.getTest2(sol2));
-
-		//The index 0 of tmp gives the weight. Index 1 gives the utility
-//			System.out.println("The weight is: " + tmp[0]);
-//			System.out.println("The utility is: " + tmp[1]);
-
-		//Once completed, your code must submit the results you generated, including your name and login:
-		//Use and adapt  the function below:
-		//	Assess.checkIn(name,login,sol1,sol2);
-
 		double[] result = Ex1.run();
 	double fit =	Assess.getTest1(result);
 	System.out.println(fit);
@@ -133,17 +41,16 @@ class Example {
 			}
 		}
 
-		public double getFitness() {
-			fitness = Assess.getTest1(chromosome);
-			return fitness;
-		}
-
-		public double[] getChromosome() {
+		public double[] getChromosome() { //get a given Chromosome
 			return chromosome;
 		}
 
 	}
 
+		public double getFitness() { //obtain fitness of a given chromosome
+			fitness = Assess.getTest1(chromosome);
+			return fitness;
+		}
 
 
 
@@ -179,7 +86,44 @@ class InitializePopulation {
 			}
 		} return fittest;
 	}
-}
+	//1.select - 2.crossover - 3.mutate
+
+	Chromosome tournSelect() {
+		int k = 10;
+		InitializePopulation tourn_pop = new InitializePopulation(k);
+		Random rand = new Random();
+		for(int i = 0; i < k; i++) {
+			int rand_index = rand.nextInt(pop_size); //random number between 0 and pop size
+			double selection[] = pop_list.get(rand_index);
+			tourn_pop.pop_list.add(selection);
+		}
+		tourn_pop.calcFitness();
+		return tourn_pop.getFittest();
+	}
+
+	public void modify() {
+		ArrayList<Chromosome> new_pop_list = new ArrayList<>();
+		for (i = 0; i < pop_size; i++) {
+		Chromosome parentA = tournSelect();
+		Chromosome parentB = torunSelect();
+		Chromosome child = crossover(parentA, parentB);
+
+		}
+	}
+
+	Chromosome crossover(Chromosome a, Chromosome b) {
+		int crossoverPoint = 9; //middle point crossover
+		Chromosome temp = new Chromosome();
+		for (int i = 0; i < 20; i++) {
+				while (crossoverPoint < i) {
+						temp.getChromosome()[i] = a.getChromosome()[i];
+				}
+				temp.getChromosome()[i] = b.getChromosome()[i];
+		}
+		return temp;
+	}
+
+
 
 	class Ex1 {
 		public Ex1() {
@@ -196,4 +140,3 @@ class InitializePopulation {
 			return fittest.getChromosome();
 		}
 	}
-
