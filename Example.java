@@ -20,14 +20,6 @@ class Example {
 		long endT = System.currentTimeMillis();
 		System.out.println("Total execution time was: " + ((endT - startT) / 1000.0) + " seconds");
 
-double[] tmp2;
-
-boolean [] result_2 = new boolean [20];
-		for(int i = 0; i < 20; i++) {
-			result_2[i] = true;
-		}
-
-tmp2 = (Assess.getTest2(result_2));
 
 System.out.println("weight = " + tmp2[0]);
 System.out.println("utility = " + tmp2[1]);
@@ -35,6 +27,151 @@ System.out.println("utility = " + tmp2[1]);
 	}
 
 }
+
+class Ex2Chromosome {
+	private boolean[] sol2_chromosome;
+	private double[] sol2_fitness;
+
+		public Ex2Chromosome() {
+			fitness = 500000;
+			sol2_chromosome = new boolean[100];
+			make_sol2_chromosome();
+		}
+
+		public void make_sol2_chromosome() {
+			for(int i=0; i < sol2_chromosome.length; i++) {
+				sol2_chromosome[i] = (Math.random() > 0.5);
+			}
+		}
+
+		public boolean[] get_sol2_chromosome() {
+			return sol2_chromosome;
+		}
+
+		public double[] get_sol2_fitness() {
+			return fitness;
+		}
+
+		public void calc_sol2_fitness() {
+			fitness = Assess.getTest2(sol2_chromosome);
+		}
+
+		public void mutation(double prob) {
+			for (int i=0; i < sol2_chromosome.length; i++){
+				if(Math.random() < prob) {
+					if(sol2_chromosome[i] == true) {
+						sol2_chromosome[i] == false;
+					} else {
+						sol2_chromosome[i] == true;
+					}
+				}
+			}
+		}
+}
+class Ex2InitialPopulation {
+	private int sol2_pop_size;
+	private ArrayList<Ex2Chromosome> sol2_population;
+
+	public sol2_initial_population(int sol2_pop_size) {
+	sol2_population = new ArrayList<>();
+	this.sol2_pop_size = sol2_pop_size;
+	}
+
+	public void sol2_make_population() {
+		for(int i = 0; i < sol2_pop_size; i++) {
+			sol2_population.add(new sol2_chromosome());
+		}
+	}
+	public void calc_sol2_fitness() {
+		for (int i=0; i< sol2_pop_size; i++) {
+			sol2_population.get(i).calc_sol2_fitness();
+		}
+	}
+	public Ex2Chromosome sol2_get_fittest() {
+		Ex2Chromosome sol2_fittest = new Ex2Chromosome();
+		for(int i=0; i < sol2_pop_size; i++)
+	}
+
+}
+
+class Ex2 {
+
+}
+
+
+class Ex1 {
+
+		public static double[] run() {
+			boolean flag = false;
+			double variance = 0.5;
+			double probability = 0.025;
+			InitializePopulation population = new InitializePopulation(500);
+
+			int generation = 0;
+			population.make_population();
+
+		//	tempList.add(fittest);
+		/**
+			InitializePopulation population2 = new InitializePopulation(500);
+			population2.make_population();
+			Chromosome secondFittest = population2.getFittest();
+			Chromosome tempy2 = new Chromosome();
+			int generation2 = 0;
+
+
+*/
+			Chromosome fittest = population.getFittest();
+			Chromosome tempy = new Chromosome();
+
+			double x = 0;
+			while(fittest.getFitness() != x) {
+				Random dblRd = new Random();
+				if (tempy.getFitness() == fittest.getFitness() && generation > 1000) {
+					flag = true;
+					break;
+				}
+				if (fittest.getFitness() < x ) {
+				variance = dblRd.nextDouble(); //adding some varience to the mutation
+				}
+				population.modify(probability, variance);
+				population.calculate_fitness();
+				tempy = fittest;
+				fittest = population.getFittest();
+				generation++;
+			}
+			/**
+
+			if (flag == true) { //second population experimentation
+
+				while(secondFittest.getFitness() != x) {
+					Random dblRd = new Random();
+					variance = dblRd.nextDouble();
+					if(tempy2.getFitness() == secondFittest.getFitness() && generation2 > 500) {
+						flag = false;
+						break;
+					}
+				population2.modify(probability, variance);
+				population2.calculate_fitness();
+				tempy2 = secondFittest;
+				generation2++;
+				}
+
+
+			}
+
+			if(fittest.getFitness() < secondFittest.getFitness()) {
+				return fittest.getChromosome();
+			}
+			else {
+				return secondFittest.getChromosome();
+			}
+*/
+return fittest.getChromosome();
+		}
+	}
+
+	//===================GA classes ===========================
+
 	class Chromosome {
 
 		private double[] chromosome;
@@ -157,76 +294,3 @@ public	Chromosome tournSelect() {
 	}
 
 }
-
-class Ex1 {
-
-
-
-		public static double[] run() {
-			boolean flag = false;
-			double variance = 0.5;
-			double probability = 0.025;
-			InitializePopulation population = new InitializePopulation(500);
-
-			int generation = 0;
-			population.make_population();
-
-		//	tempList.add(fittest);
-		/**
-			InitializePopulation population2 = new InitializePopulation(500);
-			population2.make_population();
-			Chromosome secondFittest = population2.getFittest();
-			Chromosome tempy2 = new Chromosome();
-			int generation2 = 0;
-
-
-*/
-			Chromosome fittest = population.getFittest();
-			Chromosome tempy = new Chromosome();
-
-			double x = 0;
-			while(fittest.getFitness() != x) {
-				Random dblRd = new Random();
-				if (tempy.getFitness() == fittest.getFitness() && generation > 1000) {
-					flag = true;
-					break;
-				}
-				if (fittest.getFitness() < x ) {
-				variance = dblRd.nextDouble(); //adding some varience to the mutation
-				}
-				population.modify(probability, variance);
-				population.calculate_fitness();
-				tempy = fittest;
-				fittest = population.getFittest();
-				generation++;
-			}
-			/**
-
-			if (flag == true) { //second population experimentation
-
-				while(secondFittest.getFitness() != x) {
-					Random dblRd = new Random();
-					variance = dblRd.nextDouble();
-					if(tempy2.getFitness() == secondFittest.getFitness() && generation2 > 500) {
-						flag = false;
-						break;
-					}
-				population2.modify(probability, variance);
-				population2.calculate_fitness();
-				tempy2 = secondFittest;
-				generation2++;
-				}
-
-
-			}
-
-			if(fittest.getFitness() < secondFittest.getFitness()) {
-				return fittest.getChromosome();
-			}
-			else {
-				return secondFittest.getChromosome();
-			}
-*/
-return fittest.getChromosome();
-		}
-	}
