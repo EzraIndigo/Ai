@@ -21,19 +21,16 @@ class Example {
 		System.out.println("Total execution time was: " + ((endT - startT) / 1000.0) + " seconds");
 
 
-System.out.println("weight = " + tmp2[0]);
-System.out.println("utility = " + tmp2[1]);
-
 	}
 
 }
 
 class Ex2Chromosome {
 	private boolean[] sol2_chromosome;
-	private double[] sol2_fitness;
+	private double sol2_fitness;
 
 		public Ex2Chromosome() {
-			fitness = 500000;
+			sol2_fitness = 5000000;
 			sol2_chromosome = new boolean[100];
 			make_sol2_chromosome();
 		}
@@ -48,31 +45,32 @@ class Ex2Chromosome {
 			return sol2_chromosome;
 		}
 
-		public double[] get_sol2_fitness() {
-			return fitness;
+		public double get_sol2_fitness() {
+			return sol2_fitness;
 		}
 
 		public void calc_sol2_fitness() {
-			fitness = Assess.getTest2(sol2_chromosome);
+			sol2_fitness = Assess.getTest2(sol2_chromosome);
 		}
 
 		public void mutation(double prob) {
 			for (int i=0; i < sol2_chromosome.length; i++){
 				if(Math.random() < prob) {
-					if(sol2_chromosome[i] == true) {
-						sol2_chromosome[i] == false;
+					if(sol2_chromosome[i] = true) {
+						sol2_chromosome[i] = false;
 					} else {
-						sol2_chromosome[i] == true;
+						sol2_chromosome[i] = true;
 					}
 				}
 			}
 		}
 }
+
 class Ex2InitialPopulation {
 	private int sol2_pop_size;
 	private ArrayList<Ex2Chromosome> sol2_population;
 
-	public sol2_initial_population(int sol2_pop_size) {
+	public Ex2InitialPopulation(int sol2_pop_size) {
 	sol2_population = new ArrayList<>();
 	this.sol2_pop_size = sol2_pop_size;
 	}
@@ -89,7 +87,55 @@ class Ex2InitialPopulation {
 	}
 	public Ex2Chromosome sol2_get_fittest() {
 		Ex2Chromosome sol2_fittest = new Ex2Chromosome();
-		for(int i=0; i < sol2_pop_size; i++)
+		for(int i=0; i < sol2_pop_size; i++) {
+			if(sol2_fittest.get_sol2_fitness() > sol2_population.get(i).get_sol2_fitness()) {
+				sol2_fittest = sol2_population.get(i);
+			}
+		} return sol2_fittest;
+	}
+	public Ex2Chromosome sol2_selection() {
+		int k = 3;
+		Ex2InitialPopulation new_sol2_population = new Ex2InitialPopulation(k);
+		Random rand = new Random();
+		for(int i = 0; i < k; i++) {
+			int index = rand.nextInt(sol2_pop_size);
+			new_sol2_population.sol2_population.add(sol2_population.get(index));
+		}
+		new_sol2_population.calc_sol2_fitness();
+		return new_sol2_population.sol2_get_fittest();
+	}
+	public void sol2_modify(double probability) {
+		ArrayList<Ex2Chromosome> sol2_populationList = new ArrayList<>();
+		for(int i = 0; i < sol2_pop_size; i++) {
+			Ex2Chromosome parentA = sol2_selection();
+			Ex2Chromosome parentB = sol2_selection();
+			Ex2Chromosome child = sol2_crossover(parentA, parentB);
+			child.mutation(probability);
+			new_sol2_population.add(child);
+		}
+		sol2_population.clear();
+		sol2_population.addAll(new_sol2_population);
+	}
+
+	public Ex2Chromosome sol2_crossover(Ex2Chromosome a, Ex2Chromosome b) {
+		int crossPoint1 = new Random().nextInt(49);
+		int crossPoint2 = new Random().nextInt(98 + 1) + 49;
+		Ex2Chromosome temp = new Ex2Chromosome();
+		for (int i = 0; i < 50; i++) {
+			if (crossPoint1 < i) {
+				temp.get_sol2_chromosome()[i] = a.get_sol2_chromosome()[i];
+			} else {
+				temp.get_sol2_chromosome()[i] = b.get_sol2_chromosome()[i];
+			}
+		}
+		for (int i = 49; i < 99; i++) {
+			if (crossPoint2 < i) {
+				temp.get_sol2_chromosome()[i] = a.get_sol2_chromosome()[i];
+			} else {
+				temp.get_sol2_chromosome()[i] = b.get_sol2_chromosome()[i];
+			}
+		}
+		return temp;
 	}
 
 }
@@ -244,7 +290,6 @@ class InitializePopulation {
 			}
 		} return fittest;
 	}
-	//1.select - 2.crossover - 3.mutate
 
 public	Chromosome tournSelect() {
 		int k = 3;
